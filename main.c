@@ -30,10 +30,12 @@ unsigned char* read_bmp(char* filename)
 
 int main(void){
   image = read_bmp("cur-03.bmp");
-  for (int i = 0; i < 120000; ++i){
+  
+  /*for (int i = 0; i < 120000; ++i){
     unsigned char a  = image[i];
-   // printf("%d ", a );
-  }
+    printf("%d ", a );
+  }*/
+
   int result = func(image);
   printf("\n%d\n", result);
   return 0;

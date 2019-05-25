@@ -23,28 +23,15 @@ func:
 	;_________________________________________________________________
 l1:
 	push ecx
-	;push edx
-
-	push ecx				;|print ecx 
-	push DWORD format		;|
-	call printf				;|
-	add esp, 8				;|
-
+	push edx
 	mov eax , DWORD [ebp+8]
-
-	;add eax, ecx
-	
-	
-	mov cl, [eax]
-	push ecx				;|print ecx 
-	push DWORD format		;|
-	call printf				;|
-	add esp, 8				;|
+	mov dl, [eax]
+	call print_edx
 
 	
 	sub ecx, 1
 	pop ecx
-	;pop edx
+	pop edx
 	loop l1
 ;_________________________________________________________________
 
@@ -56,13 +43,6 @@ l1:
 
 print_edx:
 	push edx				;|print ecx 
-	push DWORD format		;|
-	call printf				;|
-	add esp, 8				;|
-	ret
-
-print_eax:
-	push eax				;|print ecx 
 	push DWORD format		;|
 	call printf				;|
 	add esp, 8				;|
