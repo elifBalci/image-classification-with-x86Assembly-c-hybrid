@@ -19,70 +19,46 @@ func:
 	mov cl, [eax]
 	;call print_ecx
 
-	mov ecx,  10
+	mov ecx,  40000
+	
 	;_________________________________________________________________
 l1:
 	push ecx
 	;push edx
-
-	push ecx				;|print ecx 
-	push DWORD format		;|
-	call printf				;|
-	add esp, 8				;|
+	;push ecx				;|print ecx 
+	;push DWORD format		;|
+	;call printf			;|
+	;add esp, 8				;|
 
 	mov eax , DWORD [ebp+8]
 
 	;add eax, ecx
 	
+	pop ecx
+	mov edx, ecx
 	
-	mov cl, [eax]
+	add edx,edx 	;
+	add edx, ecx 	;edx = 3*edx - 2 to access green values.
+	sub edx, 2 		;
+
+	push ecx
+	mov cl, [eax + edx]
+
 	push ecx				;|print ecx 
 	push DWORD format		;|
 	call printf				;|
 	add esp, 8				;|
 
-	
-	sub ecx, 1
+	;sub ecx, 3 useless
 	pop ecx
 	;pop edx
 	loop l1
 ;_________________________________________________________________
 
 
-
 	pop	ebp
 	ret
 
-
-print_edx:
-	push edx				;|print ecx 
-	push DWORD format		;|
-	call printf				;|
-	add esp, 8				;|
-	ret
-
-print_eax:
-	push eax				;|print ecx 
-	push DWORD format		;|
-	call printf				;|
-	add esp, 8				;|
-	ret
-
-print_ebx:
-	push ebx				;|print ecx 
-	push DWORD format2		;|
-	call printf				;|
-	add esp, 8				;|
-	ret
-
-
-
-print_ecx:
-	push ecx				;|print ecx 
-	push DWORD format2		;|
-	call printf				;|
-	add esp, 8				;|
-	ret
 
 section .data
 	values:	TIMES	255			DB		0	
