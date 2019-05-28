@@ -14,78 +14,60 @@ global  func
 func:
 	push ebp
 	mov	ebp, esp
-
-	;mov BYTE [values], 1
-	;add BYTE [values], 3
-	mov eax, [values]
-
-;_________________________________________________________________
-	mov ecx, 255			;counter for the loop
-initialize_array:
-	push ecx
-	mov DWORD [values + ecx*4], 0
-	mov eax, [values+ ecx*4]
-	push eax				;|print
-	push DWORD format3		;|
-	;call printf			;|
-	add esp, 8				;|
-	pop ecx
-	loop initialize_array
-;_________________________________________________________________
-
-
-	mov ecx, 12000			;loop counter, goes through every pixel.
 	
+	mov eax , DWORD [ebp+8]
+	mov cl, [eax]
+	;call print_ecx
+
+	mov ecx,  10
 	;_________________________________________________________________
 l1:
-	push ecx;				;for loop counter
-	mov ebx , DWORD [ebp+8]	
-	
-	pop ecx
-	mov edx, ecx
-	
-	
-	add edx,edx 			;
-	add edx, ecx 			;edx = 3*edx - 2 to access green values.
-	sub edx, 2 				;
-	
 	push ecx
-	mov al, [ebx + edx]		;al has the desired value.
+	push edx
+	mov eax , DWORD [ebp+8]
+	mov dl, [eax]
+	call print_edx
+
 	
-	add DWORD [values + eax*4], 1
-
-	push ebx
-	push DWORD format
-	;call printf
-	add esp, 8
-
+	sub ecx, 1
 	pop ecx
+	pop edx
 	loop l1
 ;_________________________________________________________________
-	mov ecx, values
-	mov eax, 3
-	add DWORD [values + eax *4], 5
 
-	mov ecx, 255
-print_array:
-	push ecx
-	mov eax, [values+ ecx*4]
-	push eax				;|print
-	push DWORD format3		;|
-	call printf				;|
-	add esp, 8				;|
-	pop ecx
-	loop print_array
+
 
 	pop	ebp
 	ret
 
 
+print_edx:
+	push edx				;|print ecx 
+	push DWORD format		;|
+	call printf				;|
+	add esp, 8				;|
+	ret
+
+print_ebx:
+	push ebx				;|print ecx 
+	push DWORD format2		;|
+	call printf				;|
+	add esp, 8				;|
+	ret
+
+
+
+print_ecx:
+	push ecx				;|print ecx 
+	push DWORD format2		;|
+	call printf				;|
+	add esp, 8				;|
+	ret
+
 section .data
-	values:		TIMES	1064			DB		0	
-	format:		db "** a=%d\ **", 	00ah, 	0
-	format2:    db "d* a=%d\ *d", 	00ah 
-	format3:	db "&&& %d &&&&", 	00ah, 	0
+	values:	TIMES	255			DB		0	
+	format:    db "** a=%d\ **", 00ah, 0
+	format2:    db "d* a=%d\ *d", 00ah 
 ;============================================
 ; THE STACK
 ;============================================

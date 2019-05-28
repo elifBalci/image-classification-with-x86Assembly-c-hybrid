@@ -20,7 +20,7 @@ unsigned char* read_bmp(char* filename)
     }
 
     int size = 3 * width * abs(height);
-    printf("size is %d\n",size );
+    //printf("size is %d\n",size );
     unsigned char* data = malloc(size); // allocate 3 bytes per pixel
     fread(data, sizeof(unsigned char), size, f); // read the rest of the data at once
     fclose(f);
@@ -37,6 +37,6 @@ int main(void){
   }*/
 
   int result = func(image);
-  printf("\n%d\n", result);
+  //printf("\n%d\n", result);
   return 0;
 }
