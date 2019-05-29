@@ -4,6 +4,9 @@
 ; Author:      Elif Balcı
 ; Date:        2019-05-23
 ; 
+;TODO: 
+;********BMP file type check
+;********Receiving proper pixel count from c code.e
 ;
 ;=====================================================================
 
@@ -30,11 +33,8 @@ initialize_array:			;make sure every element of array is equal to 0
 	pop ecx
 	loop initialize_array
 ;_________________________________________________________________
-
-
-	mov ecx, 12000			;loop counter, goes through every pixel.
-	
 ;_________________________________________________________________
+	mov ecx, 12000			;loop counter, goes through every pixel.
 l1:							;prepares the histogram
 	push ecx;				;for loop counter
 	mov ebx , DWORD [ebp+8]	
@@ -106,27 +106,60 @@ print_array:
 
 	pop	ebp
 	ret
-
-
 print_mode:
 	push ecx				;|print
 	push DWORD format3		;|
-	call printf				;|
+	;call printf				;|
 	add esp, 8				;|
-
-
-
-
 	pop ecx
+
+;_________________________________________________________________
+	
+determine_type:
+	cmp ecx, 20
+	jle cur;
+	cmp ecx, 66
+	jle steak
+	jg salam
+;_________________________________________________________________
 	pop ebp
 	ret
 
+cur:
+	mov eax, 1
+	push eax				;|print
+	push DWORD format3		;|
+	call printf				;|
+	add esp, 8				;|
+	pop ebp
+	ret
+;_________________________________________________________________
+steak:
+	mov eax, 3
+	push eax				;|print
+	push DWORD format3		;|
+	call printf				;|
+	add esp, 8				;|
+	pop ebp
+	ret
+;_________________________________________________________________
+salam:
+	mov eax, 2
+	push eax				;|print
+	push DWORD format3		;|
+	call printf				;|
+	add esp, 8				;|
+	pop ebp
+	ret
+;_________________________________________________________________
 
 section .data
 	values:		TIMES	1064			DB		0	
+	list:		DW		20, 66					;if less then 20: currant(1), between 20 and 66: steak(3), bigger than 66: salam(2).
 	format:		db "** a=%d\ **", 	00ah, 		0
 	format2:    db "d* a=%d\ *d", 	00ah 
-	format3:	db "&&& %d &&&&", 	00ah, 		0
+	format3:	db "type is:%d ", 	00ah, 		0
+
 ;============================================
 ; THE STACK
 ;============================================

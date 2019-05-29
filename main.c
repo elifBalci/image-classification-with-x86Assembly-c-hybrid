@@ -37,6 +37,5 @@ int main(void){
   }*/
 
   int result = func(image);
-  //printf("\n%d\n", result);
   return 0;
 }
