@@ -15,13 +15,11 @@ func:
 	push ebp
 	mov	ebp, esp
 
-	;mov BYTE [values], 1
-	;add BYTE [values], 3
 	mov eax, [values]
 
 ;_________________________________________________________________
 	mov ecx, 255			;counter for the loop
-initialize_array:
+initialize_array:			;make sure every element of array is equal to 0
 	push ecx
 	mov DWORD [values + ecx*4], 0
 	mov eax, [values+ ecx*4]
@@ -36,8 +34,8 @@ initialize_array:
 
 	mov ecx, 12000			;loop counter, goes through every pixel.
 	
-	;_________________________________________________________________
-l1:
+;_________________________________________________________________
+l1:							;prepares the histogram
 	push ecx;				;for loop counter
 	mov ebx , DWORD [ebp+8]	
 	
@@ -62,9 +60,37 @@ l1:
 	pop ecx
 	loop l1
 ;_________________________________________________________________
-	mov ecx, values
-	mov eax, 3
-	add DWORD [values + eax *4], 5
+;_________________________________________________________________
+	mov ecx, 255
+	mov ebx, 0
+find_max:					; finds the max value in the histogram.
+	push ecx
+	mov eax, [values+ ecx*4]
+
+	cmp eax, ebx
+	jl less
+	mov ebx, eax
+
+less:
+	
+	pop ecx
+	loop find_max
+
+;_________________________________________________________________
+;_________________________________________________________________
+	mov ecx, 255
+find_mode:					
+	push ecx
+	mov eax, [values+ ecx*4]
+	
+	cmp eax, ebx
+	je print_mode 
+
+
+	pop ecx
+	loop find_mode
+;_________________________________________________________________
+;_________________________________________________________________
 
 	mov ecx, 255
 print_array:
@@ -72,20 +98,35 @@ print_array:
 	mov eax, [values+ ecx*4]
 	push eax				;|print
 	push DWORD format3		;|
-	call printf				;|
+	;call printf				;|
 	add esp, 8				;|
 	pop ecx
 	loop print_array
+;_________________________________________________________________
 
 	pop	ebp
 	ret
 
 
+print_mode:
+	push ecx				;|print
+	push DWORD format3		;|
+	call printf				;|
+	add esp, 8				;|
+
+
+
+
+	pop ecx
+	pop ebp
+	ret
+
+
 section .data
 	values:		TIMES	1064			DB		0	
-	format:		db "** a=%d\ **", 	00ah, 	0
+	format:		db "** a=%d\ **", 	00ah, 		0
 	format2:    db "d* a=%d\ *d", 	00ah 
-	format3:	db "&&& %d &&&&", 	00ah, 	0
+	format3:	db "&&& %d &&&&", 	00ah, 		0
 ;============================================
 ; THE STACK
 ;============================================
