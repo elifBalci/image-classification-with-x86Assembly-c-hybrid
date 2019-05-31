@@ -10,6 +10,12 @@ unsigned char* read_bmp(char* filename)
     FILE* f = fopen(filename, "rb");
     unsigned char info[54];
     fread(info, sizeof(unsigned char), 54, f); // read the 54-byte header
+    
+    //BMP format control
+    if(info[0] != 66 || info[1] != 77){
+      printf("file is not in BMP format.");
+      return 0;
+    } 
 
     // extract image height and width from header
     int width = *(int*)&info[18];
@@ -20,7 +26,6 @@ unsigned char* read_bmp(char* filename)
     }
 
     int size = 3 * width * abs(height);
-    //printf("size is %d\n",size );
     unsigned char* data = malloc(size); // allocate 3 bytes per pixel
     fread(data, sizeof(unsigned char), size, f); // read the rest of the data at once
     fclose(f);
@@ -29,12 +34,7 @@ unsigned char* read_bmp(char* filename)
 }
 
 int main(void){
-  image = read_bmp("cur-03.bmp");
-  
-  /*for (int i = 0; i < 120000; ++i){
-    unsigned char a  = image[i];
-    printf("%d ", a );
-  }*/
+  image = read_bmp("ste-04.bmp");
 
   int result = func(image);
   return 0;

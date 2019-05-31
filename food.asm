@@ -34,7 +34,7 @@ initialize_array:			;make sure every element of array is equal to 0
 	loop initialize_array
 ;_________________________________________________________________
 ;_________________________________________________________________
-	mov ecx, 12000			;loop counter, goes through every pixel.
+	mov ecx, 40000		;loop counter, goes through every pixel.
 l1:							;prepares the histogram
 	push ecx;				;for loop counter
 	mov ebx , DWORD [ebp+8]	
@@ -154,11 +154,12 @@ salam:
 ;_________________________________________________________________
 
 section .data
-	values:		TIMES	1064			DB		0	
-	list:		DW		20, 66					;if less then 20: currant(1), between 20 and 66: steak(3), bigger than 66: salam(2).
-	format:		db "** a=%d\ **", 	00ah, 		0
-	format2:    db "d* a=%d\ *d", 	00ah 
-	format3:	db "type is:%d ", 	00ah, 		0
+	values:			TIMES	1064			DB		0	
+	list:			DW		20, 66					;if less then 20: currant(1), between 20 and 66: steak(3), bigger than 66: salam(2).
+	bmp_file_size:	Dd 		bmp_file_size, 	120054
+	format:			DB "** a=%d\ **", 	00ah, 		0
+	format2:    	DB "d* a=%d\ *d", 	00ah 
+	format3:		DB "type is:%d ", 	00ah, 		0
 
 ;============================================
 ; THE STACK
