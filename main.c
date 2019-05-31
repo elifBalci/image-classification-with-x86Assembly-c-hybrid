@@ -3,6 +3,8 @@
 
 extern int func(char *a);
 unsigned char* image;
+int offset = 36;
+int bmp_file_size = 120054;
 
 unsigned char* read_bmp(char* filename)
 {
@@ -13,19 +15,21 @@ unsigned char* read_bmp(char* filename)
     
     //BMP format control
     if(info[0] != 66 || info[1] != 77){
-      printf("file is not in BMP format.");
-      return 0;
+      printf("file is not in BMP format.\n");
+      exit(0);
     } 
 
+    int size = (bmp_file_size - offset)/3;
+    printf("%d\n",size);
     // extract image height and width from header
-    int width = *(int*)&info[18];
+    /*int width = *(int*)&info[18];
     int height = *(int*)&info[22];
     int heightSign =1;
     if(height<0){
         heightSign = -1;
     }
 
-    int size = 3 * width * abs(height);
+    int size = 3 * width * abs(height);*/
     unsigned char* data = malloc(size); // allocate 3 bytes per pixel
     fread(data, sizeof(unsigned char), size, f); // read the rest of the data at once
     fclose(f);
@@ -34,7 +38,7 @@ unsigned char* read_bmp(char* filename)
 }
 
 int main(void){
-  image = read_bmp("ste-04.bmp");
+  image = read_bmp("ste-05.bmp");
 
   int result = func(image);
   return 0;
