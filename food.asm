@@ -12,9 +12,9 @@
 
 section	.text
 extern printf
-global  func
+global  food
 	
-func:
+food:
 	push ebp
 	mov	ebp, esp
 
@@ -34,14 +34,13 @@ initialize_array:			;make sure every element of array is equal to 0
 	loop initialize_array
 ;_________________________________________________________________
 ;_________________________________________________________________
-	mov ecx, 40000		;loop counter, goes through every pixel.
+	mov ecx, 40006			;loop counter, goes through every pixel.
 l1:							;prepares the histogram
 	push ecx;				;for loop counter
 	mov ebx , DWORD [ebp+8]	
 	
 	pop ecx
 	mov edx, ecx
-	
 	
 	add edx,edx 			;
 	add edx, ecx 			;edx = 3*edx - 2 to access green values.
@@ -72,7 +71,6 @@ find_max:					; finds the max value in the histogram.
 	mov ebx, eax
 
 less:
-	
 	pop ecx
 	loop find_max
 
@@ -85,7 +83,6 @@ find_mode:
 	
 	cmp eax, ebx
 	je print_mode 
-
 
 	pop ecx
 	loop find_mode

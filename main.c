@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-extern int func(char *a);
+extern int food(char *a);
 unsigned char* image;
 int offset = 36;
 int bmp_file_size = 120054;
@@ -20,7 +20,7 @@ unsigned char* read_bmp(char* filename)
     } 
 
     int size = (bmp_file_size - offset)/3;
-    printf("%d\n",size);
+    ;//printf("%d\n",size);
     // extract image height and width from header
     /*int width = *(int*)&info[18];
     int height = *(int*)&info[22];
@@ -28,8 +28,8 @@ unsigned char* read_bmp(char* filename)
     if(height<0){
         heightSign = -1;
     }
-
     int size = 3 * width * abs(height);*/
+
     unsigned char* data = malloc(size); // allocate 3 bytes per pixel
     fread(data, sizeof(unsigned char), size, f); // read the rest of the data at once
     fclose(f);
@@ -38,8 +38,8 @@ unsigned char* read_bmp(char* filename)
 }
 
 int main(void){
-  image = read_bmp("ste-05.bmp");
+  image = read_bmp("cur-02.bmp");
 
-  int result = func(image);
+  int result = food(image);
   return 0;
 }
