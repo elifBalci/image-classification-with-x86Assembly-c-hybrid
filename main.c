@@ -20,15 +20,6 @@ unsigned char* read_bmp(char* filename)
     } 
 
     int size = (bmp_file_size - offset)/3;
-    ;//printf("%d\n",size);
-    // extract image height and width from header
-    /*int width = *(int*)&info[18];
-    int height = *(int*)&info[22];
-    int heightSign =1;
-    if(height<0){
-        heightSign = -1;
-    }
-    int size = 3 * width * abs(height);*/
 
     unsigned char* data = malloc(size); // allocate 3 bytes per pixel
     fread(data, sizeof(unsigned char), size, f); // read the rest of the data at once
